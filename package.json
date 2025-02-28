@@ -1,0 +1,47 @@
+{
+  "name": "yt-video-data",
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.11.0",
+  "description": "Retrieve information about a specific YouTube video (via iframe api)",
+  "author": "wolfgang jungmayer",
+  "license": "MIT",
+  "browser": "dist/yt-video-data.umd.js",
+  "type": "module",
+  "main": "dist/yt-video-data.umd.js",
+  "module": "dist/yt-video-data.js",
+  "exports": {
+    ".": {
+      "import": "./dist/yt-video-data.js",
+      "require": "./dist/yt-video-data.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "vitest",
+    "preview": "vite preview"
+  },
+  "private": false,
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vite-plugin-banner": "^0.8.0",
+    "vitest": "^3.0.7"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "keywords": [
+    "yt-video-data",
+    "youtube video data",
+    "youtube video info"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemon3/yt-video-data.git"
+  },
+  "homepage": "https://github.com/lemon3/yt-video-data"
+}
