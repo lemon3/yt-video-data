@@ -5,7 +5,7 @@ get video data from youtube videos via the iframe api!
 
 add package to your project. (npm package coming soon)
 ```bash
-pnmp add yt-video-data
+pnpm add yt-video-data
 ```
 
 use it with await inside a async function

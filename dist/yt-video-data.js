@@ -1,49 +1,49 @@
 /*!
-* YTVideoData v0.1.0
+* YTVideoData v0.1.1
 * https://github.com/lemon3/yt-video-data
 */
-var v = Object.defineProperty, f = Object.defineProperties;
-var g = Object.getOwnPropertyDescriptors;
-var m = Object.getOwnPropertySymbols;
-var _ = Object.prototype.hasOwnProperty, P = Object.prototype.propertyIsEnumerable;
-var c = (a, e, t) => e in a ? v(a, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : a[e] = t, h = (a, e) => {
+var m = Object.defineProperty, v = Object.defineProperties;
+var P = Object.getOwnPropertyDescriptors;
+var f = Object.getOwnPropertySymbols;
+var _ = Object.prototype.hasOwnProperty, b = Object.prototype.propertyIsEnumerable;
+var c = (i, e, t) => e in i ? m(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t, p = (i, e) => {
   for (var t in e || (e = {}))
-    _.call(e, t) && c(a, t, e[t]);
-  if (m)
-    for (var t of m(e))
-      P.call(e, t) && c(a, t, e[t]);
-  return a;
-}, u = (a, e) => f(a, g(e));
-var s = (a, e, t) => c(a, typeof e != "symbol" ? e + "" : e, t);
-var d = (a, e, t) => new Promise((i, r) => {
-  var l = (n) => {
+    _.call(e, t) && c(i, t, e[t]);
+  if (f)
+    for (var t of f(e))
+      b.call(e, t) && c(i, t, e[t]);
+  return i;
+}, w = (i, e) => v(i, P(e));
+var n = (i, e, t) => c(i, typeof e != "symbol" ? e + "" : e, t);
+var o = (i, e, t) => new Promise((a, s) => {
+  var d = (r) => {
     try {
-      y(t.next(n));
-    } catch (p) {
-      r(p);
+      h(t.next(r));
+    } catch (y) {
+      s(y);
     }
-  }, o = (n) => {
+  }, l = (r) => {
     try {
-      y(t.throw(n));
-    } catch (p) {
-      r(p);
+      h(t.throw(r));
+    } catch (y) {
+      s(y);
     }
-  }, y = (n) => n.done ? i(n.value) : Promise.resolve(n.value).then(l, o);
-  y((t = t.apply(a, e)).next());
+  }, h = (r) => r.done ? a(r.value) : Promise.resolve(r.value).then(d, l);
+  h((t = t.apply(i, e)).next());
 });
-const b = (a) => {
-  if (/^[a-zA-Z0-9_-]{11}$/.test(a))
-    return a;
+const g = (i) => {
+  if (/^[a-zA-Z0-9_-]{11}$/.test(i))
+    return i;
   {
-    const e = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/, t = a.match(e);
+    const e = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/, t = i.match(e);
     return t && t[7] && t[7].length === 11 ? t[7] : !1;
   }
-}, I = (a, e = window.document) => {
+}, T = (i, e = window.document) => {
   const t = e.createElement("script");
-  t.src = a;
-  const i = e.getElementsByTagName("script")[0];
-  i && i.parentNode ? i.parentNode.insertBefore(t, i) : e.body.append(t);
-}, T = {
+  t.src = i;
+  const a = e.getElementsByTagName("script")[0];
+  a && a.parentNode ? a.parentNode.insertBefore(t, a) : e.body.append(t);
+}, I = {
   width: "160",
   height: "90",
   playerVars: {
@@ -57,19 +57,13 @@ const b = (a) => {
     rel: 0,
     fs: 0
   }
-}, w = "youtube-api-ready", E = "https://www.youtube.com/iframe_api";
-class A {
+}, u = "youtube-api-ready", Y = "https://www.youtube.com/iframe_api";
+class R {
   /**
    * constructor
    */
   constructor() {
-    s(this, "div");
-    s(this, "wrapper");
-    s(this, "ready");
-    s(this, "player");
-    s(this, "promise");
-    s(this, "videoId", "");
-    s(this, "yt");
+    n(this, "initialized", !1);
     /**
      * Youtube callback function
      * possible data values are:
@@ -77,17 +71,16 @@ class A {
      *
      * @param {*} param0
      */
-    s(this, "_stateChange", ({ data: e }) => {
+    n(this, "_stateChange", ({ data: e }) => {
       this.promise && e === 1 && (this.player.mute().stopVideo().clearVideo(), this.promise.resolve(this._createData()));
     });
     /**
      * If the youtube iframe api player is ready
      */
-    s(this, "_playerReady", () => {
-      this.ready = !0, this.player.mute(), this.player.setVolume(0);
+    n(this, "_playerReady", () => {
+      this.isPlayerReady = !0, this.player.mute(), this.player.setVolume(0);
     });
-    const e = document.createElement("div");
-    e.style.position = "absolute", e.style.left = "-200vw", e.style.opacity = "0", e.style.visibility = "hidden", this.div = document.createElement("div"), e.append(this.div), document.body.append(e), this.wrapper = e, this.ready = !1, this.init();
+    this.isPlayerReady = !1, this.init();
   }
   /**
    * Auxiliary function for creating the object to be returned
@@ -113,9 +106,9 @@ class A {
    * @returns Promise
    */
   _load(e) {
-    return d(this, null, function* () {
-      return new Promise((t, i) => {
-        this.player.loadVideoById(e), this.promise = { resolve: t, reject: i };
+    return o(this, null, function* () {
+      return new Promise((t, a) => {
+        this.player.loadVideoById(e), this.promise = { resolve: t, reject: a };
       });
     });
   }
@@ -126,15 +119,15 @@ class A {
    * @returns {object}
    */
   getInfo(e) {
-    return d(this, null, function* () {
-      const t = b(e);
-      return this.promise = null, console.log(e, t), new Promise((i, r) => {
-        t ? e = t : r("not a valid video id or url"), this.videoId = e;
-        const l = setInterval(() => d(this, null, function* () {
-          if (this.ready) {
-            clearInterval(l);
-            const o = yield this._load(e);
-            i(o);
+    return o(this, null, function* () {
+      const t = g(e);
+      return this.promise = null, new Promise((a, s) => {
+        this.initialized || s("not initialized"), t ? e = t : s("not a valid video id"), this.videoId = e;
+        const d = setInterval(() => o(this, null, function* () {
+          if (this.isPlayerReady) {
+            clearInterval(d);
+            const l = yield this._load(e);
+            a(l);
           }
         }), 20);
       });
@@ -147,16 +140,19 @@ class A {
    * @returns
    */
   _loadAPI() {
-    return d(this, null, function* () {
+    return o(this, null, function* () {
       return new Promise((e, t) => {
-        if (window.YT) return e(window.YT);
-        const i = (o) => {
-          if (window.removeEventListener(w, r), o) return e(o);
+        if (window.YT && window.YT.Player) return e(window.YT);
+        const a = () => {
+          if (window.removeEventListener(u, a), window.YT) return e(window.YT);
           t(new Error("Failed to load YouTube API"));
-        }, r = (o) => i(o.target.YT), l = new Event(w);
-        window.addEventListener(w, r), window.onYouTubeIframeAPIReady = () => {
-          window.dispatchEvent(l);
-        }, I(E);
+        };
+        if (window.addEventListener(u, a), !window.onYouTubeIframeAPIReady) {
+          const s = new Event(u);
+          window.onYouTubeIframeAPIReady = () => {
+            window.dispatchEvent(s);
+          }, T(Y);
+        }
       });
     });
   }
@@ -165,7 +161,7 @@ class A {
    * with given default Player Parameters
    */
   _createPlayer() {
-    this.player = new this.yt.Player(this.div, u(h({}, T), {
+    this.player = new this.yt.Player(this.div, w(p({}, I), {
       videoId: "dQw4w9WgXcQ",
       // Assign a string value to videoId
       events: {
@@ -189,29 +185,32 @@ class A {
       "sddefault",
       "maxresdefault",
       "hq720"
-    ].reduce((i, r) => u(h({}, i), { [r]: `${t}${r}.jpg` }), {});
+    ].reduce((a, s) => w(p({}, a), { [s]: `${t}${s}.jpg` }), {});
   }
   /**
    * destroys the yt player and the div
    */
   destroy() {
-    this.yt && (this.yt.destroy(), this.wrapper.remove());
+    !this.yt || !this.initialized || (this.player.destroy(), this.wrapper.remove(), this.initialized = !1);
   }
   /**
    * The init function
    *
-   * @returns
+   * @returns void
    */
   init() {
-    if (window.YT) {
+    if (this.initialized) return this;
+    this.initialized = !0;
+    const e = document.createElement("div"), t = e.style;
+    if (t.position = "absolute", t.left = "-200vw", t.opacity = "0", t.visibility = "hidden", this.div = document.createElement("div"), e.append(this.div), document.body.append(e), this.wrapper = e, window.YT && window.YT.Player) {
       this.yt = window.YT, this._createPlayer();
       return;
     }
-    d(this, null, function* () {
+    o(this, null, function* () {
       this.yt = yield this._loadAPI(), this._createPlayer();
     });
   }
 }
 export {
-  A as YTVideoData
+  R as YTVideoData
 };
