@@ -1,6 +1,12 @@
 import { YTVideoData } from "./index";
 import "./style.css"
 
+declare global {
+  interface Window {
+    ytv: any;
+  }
+}
+
 interface Elements {
   input: HTMLInputElement | Element | null;
   submit: Element | null;
