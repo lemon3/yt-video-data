@@ -11,7 +11,7 @@ declare global {
 interface YTVideoData {
   div: HTMLDivElement;
   wrapper: HTMLDivElement;
-  ready: boolean;
+  isPlayerReady: boolean;
   player: any;
   promise: any;
   videoId: string;
@@ -22,6 +22,8 @@ interface Result {
   author: string;
   title: string;
   duration: string;
+  videoId: string;
+  videoUrl: string;
   poster: {
     default: string;
     hqdefault: string;
@@ -64,31 +66,13 @@ const ytApiUrl = "https://www.youtube.com/iframe_api";
  * Youtube Helper Class
  */
 class YTVideoData implements YTVideoData {
-  div: HTMLDivElement;
-  wrapper: HTMLDivElement;
-  ready: boolean;
-  player: any;
-  promise: any;
-  videoId: string = "";
-  yt: any;
   initialized: boolean = false;
 
   /**
    * constructor
    */
   constructor() {
-    const wrapper = document.createElement("div");
-    wrapper.style.position = "absolute";
-    wrapper.style.left = "-200vw";
-    wrapper.style.opacity = "0";
-    wrapper.style.visibility = "hidden";
-
-    this.div = document.createElement("div");
-    wrapper.append(this.div);
-    document.body.append(wrapper);
-
-    this.wrapper = wrapper;
-    this.ready = false;
+    this.isPlayerReady = false;
     this.init();
   }
 
@@ -136,12 +120,13 @@ class YTVideoData implements YTVideoData {
     this.promise = null;
 
     return new Promise((resolve, reject) => {
-      if (!parsed) reject('not a valid video id or url');
+      if (!this.initialized) reject('not initialized');
+      if (!parsed) reject('not a valid video id');
       else videoId = parsed;
       this.videoId = videoId;
 
       const intervalId = setInterval(async () => {
-        if (this.ready) {
+        if (this.isPlayerReady) {
           clearInterval(intervalId);
           const data = await this._load(videoId);
           resolve(data as Result);
@@ -172,19 +157,17 @@ class YTVideoData implements YTVideoData {
    */
   async _loadAPI() {
     return new Promise((resolve, reject) => {
-      if (window.YT) return resolve(window.YT)
+      if (window.YT && window.YT.Player) return resolve(window.YT);
 
-      const cleanup = (yt: any) => {
+      const finished = () => {
         window.removeEventListener(ytEventName, finished);
-        if (yt) return resolve(yt);
+        if (window.YT) return resolve(window.YT);
         reject(new Error("Failed to load YouTube API"));
       };
-      const finished = (evt: any) => cleanup(evt.target.YT);
-
-      const APIReady = new Event(ytEventName);
       window.addEventListener(ytEventName, finished);
 
       if (!window.onYouTubeIframeAPIReady) {
+        const APIReady = new Event(ytEventName);
         window.onYouTubeIframeAPIReady = () => {
           window.dispatchEvent(APIReady);
         };
@@ -197,7 +180,7 @@ class YTVideoData implements YTVideoData {
    * If the youtube iframe api player is ready
    */
   _playerReady = () => {
-    this.ready = true;
+    this.isPlayerReady = true;
     this.player.mute();
     this.player.setVolume(0);
   };
@@ -207,9 +190,6 @@ class YTVideoData implements YTVideoData {
    * with given default Player Parameters
    */
   _createPlayer() {
-    console.log('1');
-    if (this.player) return;
-    console.log('s');
     this.player = new (this.yt as any).Player(this.div, {
       ...playerParameters,
       videoId: "dQw4w9WgXcQ", // Assign a string value to videoId
@@ -242,22 +222,37 @@ class YTVideoData implements YTVideoData {
    * destroys the yt player and the div
    */
   destroy() {
-    if (this.yt) {
-      this.yt.destroy();
-      this.wrapper.remove();
-    }
+    if (!this.yt || !this.initialized) return;
+
+    this.player.destroy();
+    this.wrapper.remove();
+    this.initialized = false;
   }
 
   /**
    * The init function
    *
-   * @returns
+   * @returns void
    */
   init() {
-    if (this.initialized) return;
+    if (this.initialized) return this;
     this.initialized = true;
 
-    if (window.YT) {
+    const wrapper = document.createElement("div");
+    const ws = wrapper.style;
+    ws.position = "absolute";
+    ws.left = "-200vw";
+    ws.opacity = "0";
+    ws.visibility = "hidden";
+
+    this.div = document.createElement("div");
+
+    wrapper.append(this.div);
+    document.body.append(wrapper);
+
+    this.wrapper = wrapper;
+
+    if (window.YT && window.YT.Player) {
       this.yt = window.YT;
       this._createPlayer();
       return;

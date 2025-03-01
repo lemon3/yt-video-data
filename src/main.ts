@@ -20,9 +20,11 @@ const formatTime = (seconds: number | string) => {
 
 const init = () => {
   const app = document.querySelector('#app');
-  const yth = new YTVideoData();
+  const ytv = new YTVideoData();
   const elements: Elements = { input: null, submit: null, result: null };
   const $ = (el: string) => document.querySelector(el);
+
+  window.ytv = ytv;
 
   const input = (evt: Event) => {
     console.log(evt);
@@ -33,7 +35,7 @@ const init = () => {
     const inputElement = elements.input as HTMLInputElement;
     let r;
     try {
-      r = await yth.getInfo(inputElement.value);
+      r = await ytv.getInfo(inputElement.value);
     } catch (error) {
       console.log(error);
       return false;
@@ -45,6 +47,7 @@ const init = () => {
         <div class="title">${r.title}</div>
         <div class="author">${r.author}</div>
         <div class="time">${formatTime(r.duration)}</div>
+        <div><a href="${r.videoUrl}" target="_blank">watch on youtube</div>
       `
   };
 
