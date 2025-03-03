@@ -1,1 +1,1 @@
-export { YTVideoData } from "./dist/yt-video-data.js";
+export { YTVideoData } from './dist/yt-video-data.js';

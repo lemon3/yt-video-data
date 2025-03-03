@@ -1,5 +1,7 @@
 # yt-video-data
-get video data from youtube videos via the iframe api!
+get video data from youtube videos via the **iframe api**!
+
+<img src="https://raw.githubusercontent.com/lemon3/yt-video-data/refs/heads/main/_assets/result.gif" alt="demo" width="400px"/>
 
 ## Usage
 
@@ -8,8 +10,8 @@ add package to your project. (npm package coming soon)
 pnpm add yt-video-data
 ```
 
-use it with await inside a async function
-a **good practice** is it to wrap the call in an try-catch block when using **await**!
+Use it with await inside a async function.
+It's a **good practice** to wrap the call in a try-catch block when using **await**!
 ```js
 import { YTVideoData } from "yt-video-data";
 
@@ -25,7 +27,7 @@ let res;
   console.log(res);
 })();
 ```
-or with the **then** & **catch** callback
+Or use it with the **then** & **catch** callback
 ```js
 import { YTVideoData } from "yt-video-data";
 

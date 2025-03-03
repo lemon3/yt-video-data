@@ -44,8 +44,8 @@ interface Poster {
 }
 
 const playerParameters = {
-  width: "160",
-  height: "90",
+  width: '160',
+  height: '90',
   playerVars: {
     playsinline: 0,
     autoplay: 0,
@@ -59,8 +59,8 @@ const playerParameters = {
   },
 };
 
-const ytEventName = "youtube-api-ready";
-const ytApiUrl = "https://www.youtube.com/iframe_api";
+const ytEventName = 'youtube-api-ready';
+const ytApiUrl = 'https://www.youtube.com/iframe_api';
 
 /**
  * Youtube Helper Class
@@ -83,7 +83,7 @@ class YTVideoData implements YTVideoData {
   _createData() {
     const info = this.player.playerInfo;
     let author = info.videoData.author;
-    author = author.replace("- Topic", "").trim();
+    author = author.replace('- Topic', '').trim();
 
     return {
       title: this.player.videoTitle || info.videoData.title,
@@ -162,7 +162,7 @@ class YTVideoData implements YTVideoData {
       const finished = () => {
         window.removeEventListener(ytEventName, finished);
         if (window.YT) return resolve(window.YT);
-        reject(new Error("Failed to load YouTube API"));
+        reject(new Error('Failed to load YouTube API'));
       };
       window.addEventListener(ytEventName, finished);
 
@@ -192,7 +192,7 @@ class YTVideoData implements YTVideoData {
   _createPlayer() {
     this.player = new (this.yt as any).Player(this.div, {
       ...playerParameters,
-      videoId: "dQw4w9WgXcQ", // Assign a string value to videoId
+      videoId: 'dQw4w9WgXcQ', // Assign a string value to videoId
       events: {
         onReady: this._playerReady,
         onStateChange: this._stateChange,
@@ -209,12 +209,12 @@ class YTVideoData implements YTVideoData {
   getPoster(videoId: string = this.videoId) {
     const base = `https://i.ytimg.com/vi/${videoId}/`;
     return [
-      "default",
-      "hqdefault",
-      "mqdefault",
-      "sddefault",
-      "maxresdefault",
-      "hq720",
+      'default',
+      'hqdefault',
+      'mqdefault',
+      'sddefault',
+      'maxresdefault',
+      'hq720',
     ].reduce((pre, cur) => ({ ...pre, [cur]: `${base}${cur}.jpg` }), {});
   }
 
@@ -238,14 +238,14 @@ class YTVideoData implements YTVideoData {
     if (this.initialized) return this;
     this.initialized = true;
 
-    const wrapper = document.createElement("div");
+    const wrapper = document.createElement('div');
     const ws = wrapper.style;
-    ws.position = "absolute";
-    ws.left = "-200vw";
-    ws.opacity = "0";
-    ws.visibility = "hidden";
+    ws.position = 'absolute';
+    ws.left = '-200vw';
+    ws.opacity = '0';
+    ws.visibility = 'hidden';
 
-    this.div = document.createElement("div");
+    this.div = document.createElement('div');
 
     wrapper.append(this.div);
     document.body.append(wrapper);

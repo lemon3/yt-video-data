@@ -28,6 +28,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
@@ -41,6 +43,9 @@ h1 {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 button {
@@ -71,14 +76,14 @@ button:hover {
 
 input:focus,
 input:focus-visible,
-button:focus,
+re button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
 #result {
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
 }
 
 .input-bar {

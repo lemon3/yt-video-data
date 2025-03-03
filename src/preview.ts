@@ -1,5 +1,5 @@
-import { YTVideoData } from "./index";
-import "./style.css"
+import { YTVideoData } from './index';
+import './preview.css';
 
 declare global {
   interface Window {
@@ -14,7 +14,7 @@ interface Elements {
 }
 
 const pad = (number = 0) => {
-  return ("0" + number).slice(-2);
+  return ('0' + number).slice(-2);
 };
 
 const formatTime = (seconds: number | string) => {
@@ -54,7 +54,7 @@ const init = () => {
         <div class="author">${r.author}</div>
         <div class="time">${formatTime(r.duration)}</div>
         <div><a href="${r.videoUrl}" target="_blank">watch on youtube</div>
-      `
+      `;
   };
 
   if (app) {
@@ -81,7 +81,10 @@ const init = () => {
   }
 };
 
-if ('complete' === document.readyState || 'interactive' === document.readyState) {
+if (
+  'complete' === document.readyState ||
+  'interactive' === document.readyState
+) {
   init();
   document.removeEventListener('DOMContentLoaded', init);
 } else {

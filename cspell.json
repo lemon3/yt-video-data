@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  // "dictionaryDefinitions": [
+  //   {
+  //     "name": "project-words",
+  //     "path": "./project-words.txt",
+  //     "addWords": true
+  //   }
+  // ],
+  // "dictionaries": ["project-words"],
+  "ignoreWords": [
+    "Avenir",
+    "Charli",
+    "disablekb",
+    "enablejsapi",
+    "feedrec",
+    "grec",
+    "hqdefault",
+    "Icona",
+    "maxresdefault",
+    "mqdefault",
+    "playsinline",
+    "pnmp",
+    "sddefault",
+    "showinfo",
+    "UNSTARTED",
+    "youtu"
+  ],
+  "ignorePaths": ["node_modules", "/test"]
+}
