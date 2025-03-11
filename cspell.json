@@ -25,7 +25,8 @@
     "sddefault",
     "showinfo",
     "UNSTARTED",
-    "youtu"
+    "youtu",
+    "ytvd"
   ],
   "ignorePaths": ["node_modules", "/test"]
 }

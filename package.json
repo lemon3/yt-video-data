@@ -20,7 +20,8 @@
     "build": "tsc && vite build",
     "format": "prettier --write './src/**/*.ts' && prettier --write './test/**/*.ts'",
     "test": "vitest",
-    "preview": "vite preview"
+    "demo": "tsc && vite build -c vite.config.demo.js",
+    "preview": "vite preview --outDir './demo'"
   },
   "private": false,
   "devDependencies": {
