@@ -192,7 +192,7 @@ class YTVideoData implements YTVideoData {
   _createPlayer() {
     this.player = new (this.yt as any).Player(this.div, {
       ...playerParameters,
-      videoId: 'dQw4w9WgXcQ', // Assign a string value to videoId
+      videoId: '',
       events: {
         onReady: this._playerReady,
         onStateChange: this._stateChange,

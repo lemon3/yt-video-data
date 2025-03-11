@@ -28,5 +28,5 @@
     "youtu",
     "ytvd"
   ],
-  "ignorePaths": ["node_modules", "/test"]
+  "ignorePaths": ["node_modules", "/test", ".gitignore"]
 }

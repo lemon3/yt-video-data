@@ -26,7 +26,7 @@ export default defineConfig({
 
   test: {
     globals: true,
-    environment: 'jsdom'
+    environment: 'jsdom',
   },
 
   resolve: {
@@ -38,7 +38,5 @@ export default defineConfig({
     ],
   },
 
-  plugins: [
-    banner(bannerText),
-  ],
+  plugins: [banner(bannerText)],
 });
