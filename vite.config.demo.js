@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/',
+  base: '/yt-video-data/',
   build: {
     target: 'es2015', // esnext
     outDir: resolve(__dirname, './demo'),
